@@ -1,5 +1,5 @@
 # Stage 1: Build the application using Maven
-FROM maven:3.9-eclipse-temurin-17 AS builder
+FROM maven:3.9-eclipse-temurin-21 AS builder
 # Use temurin-21 if your system.properties was for Java 21
 # FROM maven:3.9-eclipse-temurin-21 AS builder
 
@@ -22,7 +22,7 @@ RUN ./mvnw package -DskipTests -B
 
 # Stage 2: Create the runtime image
 # Use a JRE image that matches your build JDK version
-FROM eclipse-temurin:17-jre-jammy
+FROM eclipse-temurin:21-jre-jammy
 # Use temurin:21-jre-jammy if you built with Java 21
 # FROM eclipse-temurin:21-jre-jammy
 

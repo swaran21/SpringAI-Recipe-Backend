@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: springai-recipe-backend # You can adjust this if you prefer your previous name
+    env: java                   # <--- THIS IS CRUCIAL
+    region: oregon              # Or your preferred region
+    branch: main
+    plan: free
+    # buildUser: # You can uncomment these if permission issues reappear later
+    #   uid: 1000
+    #   gid: 1000
+    buildFilter: # Optional: defines which file changes trigger a new build
+      paths:
+        - "src/**"
+        - "pom.xml"
+        - "system.properties"
+        - ".mvn/**"
+        - "mvnw"
+        - "mvnw.cmd"
+        - "render.yaml" # Add render.yaml itself so changes to it trigger updates
+    buildCommand: "./mvnw clean package -DskipTests" # Let's try the simple one first with 'env: java'
+    startCommand: "java -jar target/SpringAIProject-0.0.1-SNAPSHOT.jar" # Adjust JAR name if different!
+    healthCheckPath: /health
+    envVars:
+      - key: API_KEY
+        sync: false # Value will be set in Render dashboard
+      # - key: SPRING_PROFILES_ACTIVE # Example if you use Spring profiles
+      #   value: production

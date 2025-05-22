@@ -1,13 +1,10 @@
 services:
   - type: web
     name: springai-recipe-backend
-    runtime: java               # <--- CORRECTED FIELD
+    runtime: java21             # <--- MODIFIED TO BE MORE SPECIFIC
     region: oregon
     branch: main
     plan: free
-    # buildUser:
-    #   uid: 1000
-    #   gid: 1000
     buildFilter:
       paths:
         - "src/**"
@@ -21,7 +18,7 @@ services:
     startCommand: "java -jar target/SpringAIProject-0.0.1-SNAPSHOT.jar" # Adjust JAR name!
     healthCheckPath: /health
     envVars:
-      - key: OPENAI_API_KEY # Changed from API_KEY to match previous successful setup
+      - key: OPENAI_API_KEY
         sync: false
       # - key: SPRING_PROFILES_ACTIVE
       #   value: production

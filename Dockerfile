@@ -6,15 +6,11 @@ FROM maven:3.9-eclipse-temurin-17 AS builder
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy the Maven wrapper files and pom.xml
-# This allows Docker to cache Maven dependencies if pom.xml hasn't changed
 COPY .mvn/ .mvn/
 COPY mvnw .
-COPY mvnw.cmd . # Though mvnw.cmd isn't used on Linux, copying it is harmless
+COPY mvnw.cmd .
 COPY pom.xml .
 
-# Download Maven dependencies (this layer is cached if pom.xml is unchanged)
-# Using pom.xml directly with mvn -f pom.xml ensures wrapper uses project pom
 RUN ./mvnw dependency:go-offline -B
 
 # Copy the rest of your application's source code

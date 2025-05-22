@@ -1,11 +1,11 @@
 services:
   - type: web
-    name: springai-recipe-backend
-    runtime: java21
+    name: springai-recipe-backend # Or your preferred name
+    runtime: java21             # <--- Crucial: Specific Java runtime
     region: oregon
     branch: main
     plan: free
-    buildFilter:
+    buildFilter: # Optional: defines which file changes trigger a new build
       paths:
         - "src/**"
         - "pom.xml"
@@ -15,8 +15,10 @@ services:
         - "mvnw.cmd"
         - "render.yaml"
     buildCommand: "./mvnw clean package -DskipTests"
-    startCommand: "java -jar target/SpringAIProject-0.0.1-SNAPSHOT.jar"
+    startCommand: "java -jar target/SpringAIProject-0.0.1-SNAPSHOT.jar" # Adjust JAR name if different!
     healthCheckPath: /health
     envVars:
       - key: OPENAI_API_KEY
-        sync: false
+        sync: false # Value will be set in Render dashboard
+      # - key: SPRING_PROFILES_ACTIVE # Example
+      #   value: production
